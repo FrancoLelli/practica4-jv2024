@@ -1,7 +1,7 @@
 public class CuentaAhorros extends Cuenta{
     protected boolean activa;
 
-    public CuentaAhorros(boolean activa, float saldo, float tasaAnual){
+    public CuentaAhorros(float saldo, float tasaAnual){
         super(saldo, tasaAnual);
         this.activa = !(saldo < 10000);
     }
@@ -24,12 +24,12 @@ public class CuentaAhorros extends Cuenta{
                 '}';
     }
 
-    public float extractoMensual(){
+    public void extractoMensual(float cantidad){
         if(getNumeroRetiros() > 4){
-            return getSaldo() - 1000;
-        }else{
-            return getSaldo();
+            float nuevoSaldo = getSaldo() - 1000;
+            setSaldo(nuevoSaldo);
         }
+        super.extractoMensual(cantidad);
     }
 
     @Override
@@ -47,8 +47,7 @@ public class CuentaAhorros extends Cuenta{
     public float retirar(float cantidad){
         if(isActiva()){
             float nuevaCantidad = getSaldo() - cantidad;
-            float cantidadExctracto = this.extractoMensual();
-            if(cantidadExctracto > 0){
+            if(nuevaCantidad > 0){
                 setSaldo(nuevaCantidad);
                 int numeroRetirosNuevo = getNumeroRetiros() + 1;
                 setNumeroRetiros(numeroRetirosNuevo);

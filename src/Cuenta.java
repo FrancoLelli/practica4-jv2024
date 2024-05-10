@@ -54,8 +54,13 @@ public abstract class Cuenta implements Servicios {
         this.comisionMensual = comisionMensual;
     }
 
-    public int calcularInteres(){
-        return 2;
+    public float calcularInteres(){
+        float interesMensual = getTasaAnual() / 12;
+        return interesMensual;
+    }
+
+    public void extractoMensual(float cantidad){
+        float extractoMensual = cantidad - this.comisionMensual - calcularInteres();
     }
 
     @Override
